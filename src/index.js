@@ -35,11 +35,42 @@ const MORSE_TABLE = {
     '---..':  '8',
     '----.':  '9',
     '-----':  '0',
+    '**********': ' ',
 };
 
 function decode(expr) {
-    // write your solution here
+    let arr = [];
+  for(let i = 0; i < expr.length; i += 10) {
+       arr.push(expr.slice(i, i + 10))
+    }
+
+    let deleteZeros = [];
+
+    arr.map(elem => {
+      deleteZeros.push(elem.replace(/(00)/gm, ''))
+    })
+
+
+    let changeTens = [];
+    deleteZeros.map(elem => {
+      changeTens.push(elem.replace(/(10)/gm, '.'))
+    })
+
+    let changeElevens = [];
+    changeTens.map(elem => {
+      changeElevens.push(elem.replace(/(11)/gm, '-'))
+    })
+
+
+
+    let sentence = [];
+    for(let j = 0; j < changeElevens.length; j++) {
+      sentence.push(MORSE_TABLE[changeElevens[j]])
+    }
+
+    return sentence.join('')
 }
+
 
 module.exports = {
     decode
